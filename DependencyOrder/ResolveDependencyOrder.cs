@@ -6,7 +6,7 @@ namespace DependencyOrder
 {
     public class ResolveDependencyOrder
     {
-        HashSet<Project> ex_seq_Projects = null;
+        public HashSet<Project> ex_seq_Projects = null;
         HashSet<Project> resolved_Projects = null;
 
         public ResolveDependencyOrder()
