@@ -25,7 +25,10 @@ namespace DependencyOrder
             }
 
             AllProjects.ExceptWith(DependencyProjects);
-            return AllProjects;
+            if(AllProjects?.Count > 0)
+                return AllProjects;
+            else
+                throw new Exception($"No Start Up Project Exists !!!");
         }
 
         public void ResolveDependency(Project start_Project)
@@ -36,7 +39,7 @@ namespace DependencyOrder
                 if (!ex_seq_Projects.Contains(dependency_Project))
                 {
                     if (resolved_Projects.Contains(dependency_Project))
-                        throw new Exception($"Circular reference detected: {start_Project.Name} -> {dependency_Project.Name}");
+                        throw new Exception($"Circular reference detected: {start_Project.Name} -> {dependency_Project.Name} !!!");
                     ResolveDependency(dependency_Project);
                 }
             ex_seq_Projects.Add(start_Project);

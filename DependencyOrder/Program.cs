@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DependencyOrder
 {
@@ -7,41 +8,52 @@ namespace DependencyOrder
     {
         static void Main(string[] args)
         {
-            Project ProjectA = new Project("a");
-            Project ProjectB = new Project("b");
-            Project ProjectC = new Project("c");
-            Project ProjectD = new Project("d");
-            Project ProjectE = new Project("e");
-
-            Project ProjectF = new Project("f");
-            Project ProjectG = new Project("g");
-
-            ProjectA.AddDependencyProjects(ProjectB);
-            ProjectA.AddDependencyProjects(ProjectD);
-            ProjectA.AddDependencyProjects(ProjectC);
-            ProjectA.AddDependencyProjects(ProjectE);
-            ProjectB.AddDependencyProjects(ProjectC);
-            ProjectB.AddDependencyProjects(ProjectE);
-            ProjectC.AddDependencyProjects(ProjectD);
-            ProjectC.AddDependencyProjects(ProjectE);
-            ProjectF.AddDependencyProjects(ProjectB);
-            ProjectF.AddDependencyProjects(ProjectG);
-            ProjectA.AddDependencyProjects(ProjectG);
-            //ProjectD.AddDependencyProjects(ProjectB);
-
+            bool flag = true;
             HashSet<Project> AllProjects = new HashSet<Project>();
-            AllProjects.Add(ProjectA);
-            AllProjects.Add(ProjectB);
-            AllProjects.Add(ProjectC);
-            AllProjects.Add(ProjectD);
-            AllProjects.Add(ProjectE);
-            AllProjects.Add(ProjectF);            
+            while (flag)
+            {
+                Console.Write($"Enter Project Name (Enter 'NA' If Don't Want To Add Next Project): ");
+                string ProjectName = Console.ReadLine();
+                if (!ProjectName.Equals("NA", StringComparison.OrdinalIgnoreCase))
+                    AllProjects.Add(new Project(ProjectName));
+                else
+                    flag = false;
+            }
+            if (AllProjects?.Count > 1)
+            {
+                foreach (Project p in AllProjects)
+                {
+                    flag = true;
+                    while (flag)
+                    {
+                        Console.Write($"Enter Dependency Projects for {p.Name} seperated by space (Enter 'NA' if no dependency project exists): ");
+                        string DependencyProjects = Console.ReadLine();
+                        if (!DependencyProjects.Equals("NA", StringComparison.OrdinalIgnoreCase))
+                        {
+                            string[] projects = DependencyProjects.Split(' ');
+                            foreach (string project in projects)
+                            {
+                                var dependencyproject = AllProjects.ToList().Where(x => x.Name.Equals(project, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                                if (dependencyproject != null)
+                                {
+                                    p.AddDependencyProjects(dependencyproject);
+                                    flag = false;
+                                }
+                                else
+                                    Console.WriteLine($"Project {project} does not exists. Please try again.");
+                            }
+                        }
+                        else
+                            flag = false;
+                    }
+                }
+            }
 
-            ResolveDependencyOrder resolveDependency = new ResolveDependencyOrder();
-            HashSet<Project> StartUpProjects = resolveDependency.GetStartUpProjects(AllProjects);
+            ResolveDependencyOrder resolveDependency = new ResolveDependencyOrder();            
             try
             {
-                foreach(Project project in StartUpProjects)
+                HashSet<Project> StartUpProjects = resolveDependency.GetStartUpProjects(AllProjects);
+                foreach (Project project in StartUpProjects)
                     resolveDependency.ResolveDependency(project);
             }
             catch(Exception ex)
@@ -49,6 +61,8 @@ namespace DependencyOrder
                 Console.WriteLine(ex.Message);
             }
 
+            Console.WriteLine();
+            Console.WriteLine("Order of Project Execution");
             resolveDependency.ShowProjectsExecutionSequence();
             Console.ReadLine();
         }
