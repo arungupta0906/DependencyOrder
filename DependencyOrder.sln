@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyOrder", "DependencyOrder\DependencyOrder.csproj", "{E19E059D-28BB-48DA-AC2C-92DA270C1274}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyOrder", "DependencyOrder\DependencyOrder.csproj", "{E19E059D-28BB-48DA-AC2C-92DA270C1274}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyOrder.UnitTest", "DependencyOrder.UnitTest\DependencyOrder.UnitTest.csproj", "{A8DD8EF6-103A-436E-8FE8-2A65F940B4EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyOrder.UnitTest", "DependencyOrder.UnitTest\DependencyOrder.UnitTest.csproj", "{A8DD8EF6-103A-436E-8FE8-2A65F940B4EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51C44B37-8746-4EF6-B8BF-15355037378A}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
