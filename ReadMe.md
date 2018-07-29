@@ -1,6 +1,6 @@
 ﻿This is a simple console version of a dependency problem program.
 The problem is solved using graph. Each project is describe by single node and dependent projects are connected with edges as sub-node.
-I have also added other test cases file with the sample of test cases I executed.
+I have also added other test samples file with the sample of test cases I executed.
 
 The program should works as follows:  
  1. Add all the projects.
